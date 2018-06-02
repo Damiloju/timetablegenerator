@@ -16,6 +16,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('departments/remove/{id}', 'DepartmentsController@remove')->name('department.remove');
     Route::get('time-table', 'TimeTableController@index')->name('timetable.index');
 
+    Route::get('level', 'LevelsController@index')->name('level');
+
+    Route::get('venues', 'VenuesController@index')->name('venues');
+    Route::post('venues/store', 'VenuesController@store')->name('venue.store');
+
+    Route::get('settings', 'SettingsController@index')->name('settings');
+    Route::post('settings/store', 'SettingsController@store')->name('settings.store');
+
     Route::get('generate', 'TimeTableController@generate');
 
 });

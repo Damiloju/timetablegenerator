@@ -3,15 +3,17 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
                     <div class="panel-heading" style="overflow: hidden;">
                         <h4 class="text-center" style="text-transform: uppercase">
-                            <strong>{{ $condition['semester'] }} Semester TimeTable</strong>
+                            {{ strtoupper($institution) }}<br><br>
+                            <strong>{{ $condition['semester'] }} Semester TimeTable</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button class="btn btn-success" onclick="printElem()">Print</button>
                         </h4>
                     </div>
 
-                    <div class="panel-body">
+                    <div class="panel-body" id="printArea">
 
                         @if(count($schedule))
                             <table class="table table-responsive table-striped table-bordered">
@@ -32,7 +34,10 @@
                                     <tr>
                                         <td>{{ $daysLabel[$loop->index] }}</td>
                                         @foreach($day as $item)
-                                            <td>{{ $item }}</td>
+                                            <td>
+                                                <strong>{{ $item }}</strong><br>
+                                                <small>{!! optional($venues)[$item] !!}</small>
+                                            </td>
                                         @endforeach
                                     </tr>
                                 @endforeach
@@ -47,4 +52,23 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function printElem() {
+            var content = document.getElementById('printArea').innerHTML;
+            var mywindow = window.open('', 'Print', 'height=900,width=800');
+
+            mywindow.document.write('<html><head><title>Print</title>');
+            mywindow.document.write('</head><body >');
+            mywindow.document.write("<span style=\"text-align:center;\">{{ $institution }}</span>");
+            mywindow.document.write(content);
+            mywindow.document.write('</body></html>');
+
+            mywindow.document.close();
+            mywindow.focus();
+            mywindow.print();
+            mywindow.close();
+            return true;
+        }
+    </script>
 @endsection

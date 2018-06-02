@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTimeTablesTable extends Migration
+class CreateVenuesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateTimeTablesTable extends Migration
      */
     public function up()
     {
-        Schema::create('time_tables', function (Blueprint $table) {
+        Schema::create('venues', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('dept')->unsigned();
-            $table->integer('semester')->unsigned();
-            $table->integer('level')->unsigned();
-            $table->string('session');
-            $table->text('schedule');
+            $table->string('name');
+            $table->boolean('is_in_use')->default(FALSE);
+            $table->string('course_id')->nullable();
+            $table->string('day')->nullable();
+            $table->string('time')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ class CreateTimeTablesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('time_tables');
+        Schema::dropIfExists('venues');
     }
 }
